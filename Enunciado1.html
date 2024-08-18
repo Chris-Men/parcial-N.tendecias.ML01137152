@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mensaje de bienvenida</title>
+  <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+</head>
+<body>
+<h2>mensaje de bienvenida</h2>
+
+  <div id="app">
+    <mensaje-bienvenida></mensaje-bienvenida>
+  </div>
+
+  <script>
+    const { createApp, reactive } = Vue;
+
+    const MensajeBienvenida = {
+      template: `
+        <div>
+          <input v-model="estado.nombre" placeholder="Ingresa tu nombre" />
+          <p v-if="estado.nombre">¡Bienvenido, {{ estado.nombre }}!</p>
+        </div>
+      `,
+      setup() {
+        const estado = reactive({
+          nombre: ''
+        });
+
+        return { estado };
+      }
+    };
+
+    createApp({
+      components: {
+        'mensaje-bienvenida': MensajeBienvenida
+      }
+    }).mount('#app');
+  </script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #app {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+  </style>
+</body>
+</html>

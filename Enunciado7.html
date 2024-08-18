@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio de Tema</title>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+</head>
+<body :class="temaActual">
+    <div id="app">
+        <h1>{{ temaActual === 'oscuro' ? 'Tema Oscuro' : 'Tema Claro' }}</h1>
+        <button @click="cambiarTema">
+            Cambiar a {{ temaActual === 'oscuro' ? 'Tema Claro' : 'Tema Oscuro' }}
+        </button>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+          setup() {
+            const temaActual = ref('claro');
+
+            const cambiarTema = () => {
+              temaActual.value = temaActual.value === 'oscuro' ? 'claro' : 'oscuro';
+              document.body.className = temaActual.value;
+            };
+
+            return {
+              temaActual,
+              cambiarTema
+            };
+          }
+        }).mount('#app');
+    </script>
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilos para el tema claro */
+        body.claro {
+            background-color: white;
+            color: black;
+        }
+
+        /* Estilos para el tema oscuro */
+        body.oscuro {
+            background-color: black;
+            color: white;
+        }
+
+        /* Estilo para el botón */
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Estilo para el botón en el tema claro */
+        body.claro button {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Estilo para el botón en el tema oscuro */
+        body.oscuro button {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</body>
+</html>

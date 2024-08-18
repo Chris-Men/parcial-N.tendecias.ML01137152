@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch de Cambios</title>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <componente-cambio></componente-cambio>
+    </div>
+
+    <script>
+        const { createApp, ref, watch } = Vue;
+
+        const ComponenteCambio = {
+          template: `
+            <div>
+              <input v-model="valor" placeholder="Ingresa un valor" />
+              <p v-if="mensaje">{{ mensaje }}</p>
+            </div>
+          `,
+          setup() {
+            const valor = ref('');
+            const mensaje = ref('');
+
+            // Watch para detectar cambios en el valor
+            watch(valor, (nuevoValor, valorAntiguo) => {
+              if (nuevoValor !== valorAntiguo) {
+                mensaje.value = `El valor ha cambiado de "${valorAntiguo}" a "${nuevoValor}"`;
+              }
+            });
+
+            return {
+              valor,
+              mensaje
+            };
+          }
+        };
+
+        createApp({
+          components: {
+            'componente-cambio': ComponenteCambio
+          }
+        }).mount('#app');
+    </script>
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e9ecef;
+        }
+
+        div {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+</body>
+</html>

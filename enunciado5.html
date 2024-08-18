@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas</title>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Lista de Tareas</h1>
+        <input v-model="nuevaTarea" placeholder="Agregar nueva tarea" @keyup.enter="agregarTarea" />
+        <button @click="agregarTarea">Agregar Tarea</button>
+        <ul>
+            <li v-for="(tarea, indice) in tareas" :key="indice">
+                {{ tarea }}
+                <button @click="eliminarTarea(indice)" class="eliminar">Eliminar</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+          setup() {
+            const nuevaTarea = ref('');
+            const tareas = ref([]);
+
+            const agregarTarea = () => {
+              if (nuevaTarea.value.trim() !== '') {
+                tareas.value.push(nuevaTarea.value.trim());
+                nuevaTarea.value = ''; 
+              }
+            };
+
+            const eliminarTarea = (indice) => {
+              tareas.value.splice(indice, 1);
+            };
+
+            return {
+              nuevaTarea,
+              tareas,
+              agregarTarea,
+              eliminarTarea
+            };
+          }
+        }).mount('#app');
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .eliminar {
+            background-color: #dc3545;
+            margin-left: 15px;
+        }
+
+        .eliminar:hover {
+            background-color: #c82333;
+        }
+    </style>
+</body>
+</html>

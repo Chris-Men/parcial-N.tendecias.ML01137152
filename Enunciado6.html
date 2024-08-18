@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Calculadora</h1>
+        <div>
+            <input v-model.number="numero1" placeholder="Número 1" type="number" />
+            <input v-model.number="numero2" placeholder="Número 2" type="number" />
+        </div>
+        <div>
+            <button @click="calculate('sumar')">Sumar</button>
+            <button @click="calculate('restar')">Restar</button>
+            <button @click="calculate('multiplicar')">Multiplicar</button>
+            <button @click="calculate('dividir')">Dividir</button>
+        </div>
+        <h2>Resultado: {{ resultado }}</h2>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+          setup() {
+            const numero1 = ref(0);
+            const numero2 = ref(0);
+            const resultado = ref(0);
+
+            const calculate = (operation) => {
+              switch(operation) {
+                case 'sumar':
+                  resultado.value = numero1.value + numero2.value;
+                  break;
+                case 'restar':
+                  resultado.value = numero1.value - numero2.value;
+                  break;
+                case 'multiplicar':
+                  resultado.value = numero1.value * numero2.value;
+                  break;
+                case 'dividir':
+                  resultado.value = numero2.value !== 0 ? numero1.value / numero2.value : 'Error: División por 0';
+                  break;
+              }
+            };
+
+            return {
+              numero1,
+              numero2,
+              resultado,
+              calculate
+            };
+          }
+        }).mount('#app');
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 200px;
+            margin-right: 10px;
+        }
+
+        div {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            color: #333;
+        }
+    </style>
+</body>
+</html>

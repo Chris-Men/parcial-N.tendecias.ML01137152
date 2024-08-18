@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje Condicional</title>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <mensaje-condicional></mensaje-condicional>
+    </div>
+
+    <script>
+        const { createApp, ref, computed } = Vue;
+
+        const MensajeCondicional = {
+          template: `
+            <div>
+              <p>{{ mensaje }}</p>
+              <button @click="cambiarCondicion">Cambiar Condición</button>
+            </div>
+          `,
+          setup() {
+            const condicion = ref(true);
+
+            const mensaje = computed(() => {
+              return condicion.value 
+                ? 'La condición es verdadera' 
+                : 'La condición es falsa';
+            });
+
+            const cambiarCondicion = () => {
+              condicion.value = !condicion.value;
+            };
+
+            return {
+              mensaje,
+              cambiarCondicion
+            };
+          }
+        };
+
+        createApp({
+          components: {
+            'mensaje-condicional': MensajeCondicional
+          }
+        }).mount('#app');
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        div {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+            margin: 0 0 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta de componente</title>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <componente-alerta></componente-alerta>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        const ComponenteAlerta = {
+          template: `
+            <div>
+              <input v-model="entradaUsuario" placeholder="Escribe algo" />
+              <button @click="mostrarAlerta">Mostrar Alerta</button>
+            </div>
+          `,
+          setup() {
+            const entradaUsuario = ref('');
+
+            const mostrarAlerta = () => {
+              alert(`Has escrito: ${entradaUsuario.value}`);
+            };
+
+            return {
+              entradaUsuario,
+              mostrarAlerta
+            };
+          }
+        };
+
+        createApp({
+          components: {
+            'componente-alerta': ComponenteAlerta
+          }
+        }).mount('#app');
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #app {
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</body>
+</html>
